@@ -1,18 +1,13 @@
 digraph update_stack {
 
-node [layer=all];
-edge [layer=all];
-
-layers="happy:sad"
-
-CREATE_COMPLETE [ layer="happy" ]
-UPDATE_COMPLETE [ layer="happy" ]
-UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ layer="happy" style=dotted label="UPDATE_COMPLETE\nCLEANUP_IN_PROGRESS" ]
-UPDATE_IN_PROGRESS [ layer="happy" style=dotted ]
-UPDATE_ROLLBACK_COMPLETE [ layer="sad" ]
-UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ layer="sad" style=dotted label="UPDATE_ROLLBACK_COMPLETE\nCLEANUP_IN_PROGRESS" ]
-UPDATE_ROLLBACK_FAILED [ layer="sad" ]
-UPDATE_ROLLBACK_IN_PROGRESS [ layer="sad" style=dotted ]
+CREATE_COMPLETE
+UPDATE_COMPLETE
+UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_COMPLETE\nCLEANUP_IN_PROGRESS" ]
+UPDATE_IN_PROGRESS [ style=dotted ]
+UPDATE_ROLLBACK_COMPLETE
+UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_ROLLBACK_COMPLETE\nCLEANUP_IN_PROGRESS" ]
+UPDATE_ROLLBACK_FAILED
+UPDATE_ROLLBACK_IN_PROGRESS [ style=dotted ]
 
 { CREATE_COMPLETE, UPDATE_COMPLETE } -> UPDATE_IN_PROGRESS -> try_rollforward_creates_and_updates -> check_rollforward_creates_and_updates
 try_rollforward_creates_and_updates [ shape="rect" label="Run the ROLLFORWARD plan\n(creates + updates)" ]

@@ -1,20 +1,14 @@
 digraph create_stack {
 
-node [layer=all];
-edge [layer=all];
+before_existence [ label="(no stack)" ]
 
-layers="happy:sad"
+CREATE_COMPLETE
+CREATE_IN_PROGRESS [ style=dotted ]
+CREATE_FAILED
+ROLLBACK_COMPLETE
+ROLLBACK_FAILED
+ROLLBACK_IN_PROGRESS [ style=dotted ]
 
-before_existence [ layer="happy" label="(no stack)" ]
-
-CREATE_COMPLETE [ layer="happy" ]
-CREATE_IN_PROGRESS [ layer="happy" style=dotted ]
-CREATE_FAILED [ layer="sad" ]
-ROLLBACK_COMPLETE [ layer="sad" ]
-ROLLBACK_FAILED [ layer="sad" ]
-ROLLBACK_IN_PROGRESS [ layer="sad" style=dotted ]
-
-edge [layer=happy];
 before_existence -> CREATE_IN_PROGRESS -> try_creates -> check_creates
 try_creates [ shape="rect" label="Try creating the resources\n(respecting the dependency order)" ]
 check_creates [ label="Did the creates all succeed?" shape="diamond" ]

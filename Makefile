@@ -7,3 +7,4 @@ default:
 	dot -Tpng -o output/cf-happy-atrest.png ./cf-happy-atrest.dot
 	dot -Tpng -o output/create-stack.png ./create-stack.dot
 	dot -Tpng -o output/update-stack.png ./update-stack.dot
+	dot -Tpng -o output/delete-stack.png ./delete-stack.dot
