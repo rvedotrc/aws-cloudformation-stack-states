@@ -1,33 +1,34 @@
 digraph create_stack {
 
-before_existence [ label="(no stack)" ]
+  before_existence [ label="(no stack)" ]
 
-CREATE_COMPLETE
-CREATE_IN_PROGRESS [ style=dotted ]
-CREATE_FAILED
-ROLLBACK_COMPLETE
-ROLLBACK_FAILED
-ROLLBACK_IN_PROGRESS [ style=dotted ]
+  CREATE_COMPLETE
+  CREATE_IN_PROGRESS [ style=dotted ]
+  CREATE_FAILED
+  ROLLBACK_COMPLETE
+  ROLLBACK_FAILED
+  ROLLBACK_IN_PROGRESS [ style=dotted ]
 
-before_existence -> CREATE_IN_PROGRESS -> try_creates -> check_creates
-try_creates [ shape="rect" label="Try creating the resources\n(respecting the dependency order)" ]
-check_creates [ label="Did the creates all succeed?" shape="diamond" ]
-check_creates -> CREATE_COMPLETE [ label="yes" ]
-check_creates -> do_we_need_rollback [ label="no" ]
-do_we_need_rollback [ shape="diamond" label="Did any of the creates succeed?" ]
-do_we_need_rollback -> CREATE_FAILED [ label="no" ]
-do_we_need_rollback -> ROLLBACK_IN_PROGRESS [ label="yes" ]
+  before_existence -> CREATE_IN_PROGRESS -> try_creates -> check_creates
+  try_creates [ shape="rect" label="Try creating the resources\n(respecting the dependency order)" ]
+  check_creates [ label="Did the creates all succeed?" shape="diamond" ]
+  check_creates -> CREATE_COMPLETE [ label="yes" ]
+  check_creates -> do_we_need_rollback [ label="no" ]
+  do_we_need_rollback [ shape="diamond" label="Did any of the creates succeed?" ]
+  do_we_need_rollback -> CREATE_FAILED [ label="no" ]
+  do_we_need_rollback -> ROLLBACK_IN_PROGRESS [ label="yes" ]
 
-ROLLBACK_IN_PROGRESS -> try_deletes -> check_deletes
-try_deletes [ shape="rect" label="Try deleting the resources\n(respecting the dependency order)" ]
-check_deletes [ shape="diamond" label="Did the deletes all succeed?" ]
-check_deletes -> ROLLBACK_COMPLETE [ label="yes" ]
-check_deletes -> ROLLBACK_FAILED [ label="no" ]
+  ROLLBACK_IN_PROGRESS -> try_deletes -> check_deletes
+  try_deletes [ shape="rect" label="Try deleting the resources\n(respecting the dependency order)" ]
+  check_deletes [ shape="diamond" label="Did the deletes all succeed?" ]
+  check_deletes -> ROLLBACK_COMPLETE [ label="yes" ]
+  check_deletes -> ROLLBACK_FAILED [ label="no" ]
 
-// But would be useful to document: for each of those terminal states, what
-// states are the resources in?  What happens to the stack next?
+  // But would be useful to document: for each of those terminal states, what
+  // states are the resources in?  What happens to the stack next?
 
-// Resource statuses include:
-// CREATE_COMPLETE, UPDATE_COMPLETE, DELETE_COMPLETE, DELETE_FAILED, DELETE_SKIPPED.
+  // Resource statuses include:
+  // CREATE_COMPLETE, UPDATE_COMPLETE, DELETE_COMPLETE, DELETE_FAILED, DELETE_SKIPPED.
 
 }
+// # vi: set sw=2 et ai :

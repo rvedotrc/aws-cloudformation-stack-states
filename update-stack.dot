@@ -1,40 +1,41 @@
 digraph update_stack {
 
-CREATE_COMPLETE
-UPDATE_COMPLETE
-UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_COMPLETE\nCLEANUP_IN_PROGRESS" ]
-UPDATE_IN_PROGRESS [ style=dotted ]
-UPDATE_ROLLBACK_COMPLETE
-UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_ROLLBACK_COMPLETE\nCLEANUP_IN_PROGRESS" ]
-UPDATE_ROLLBACK_FAILED
-UPDATE_ROLLBACK_IN_PROGRESS [ style=dotted ]
+  CREATE_COMPLETE
+  UPDATE_COMPLETE
+  UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_COMPLETE\nCLEANUP_IN_PROGRESS" ]
+  UPDATE_IN_PROGRESS [ style=dotted ]
+  UPDATE_ROLLBACK_COMPLETE
+  UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ style=dotted label="UPDATE_ROLLBACK_COMPLETE\nCLEANUP_IN_PROGRESS" ]
+  UPDATE_ROLLBACK_FAILED
+  UPDATE_ROLLBACK_IN_PROGRESS [ style=dotted ]
 
-{ CREATE_COMPLETE, UPDATE_COMPLETE } -> UPDATE_IN_PROGRESS -> try_rollforward_creates_and_updates -> check_rollforward_creates_and_updates
-try_rollforward_creates_and_updates [ shape="rect" label="Run the ROLLFORWARD plan\n(creates + updates)" ]
-check_rollforward_creates_and_updates [ label="Did the rollforward creates\n& updates all succeed?" shape="diamond" ]
-check_rollforward_creates_and_updates -> UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ label="yes (or no-op)" ]
-check_rollforward_creates_and_updates -> UPDATE_ROLLBACK_IN_PROGRESS [ label="no" ]
+  { CREATE_COMPLETE, UPDATE_COMPLETE } -> UPDATE_IN_PROGRESS -> try_rollforward_creates_and_updates -> check_rollforward_creates_and_updates
+  try_rollforward_creates_and_updates [ shape="rect" label="Run the ROLLFORWARD plan\n(creates + updates)" ]
+  check_rollforward_creates_and_updates [ label="Did the rollforward creates\n& updates all succeed?" shape="diamond" ]
+  check_rollforward_creates_and_updates -> UPDATE_COMPLETE_CLEANUP_IN_PROGRESS [ label="yes (or no-op)" ]
+  check_rollforward_creates_and_updates -> UPDATE_ROLLBACK_IN_PROGRESS [ label="no" ]
 
-UPDATE_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollforward_cleanup -> check_rollforward_cleanup
-try_rollforward_cleanup [ shape="rect" label="Run the ROLLFORWARD plan\n(deletes)" ]
-check_rollforward_cleanup [ shape="diamond" label="Did all the rollforward\ndeletes all succeed?" ]
-check_rollforward_cleanup -> UPDATE_COMPLETE_3 [ label="yes (or no-op)" ]
-check_rollforward_cleanup -> UPDATE_ROLLBACK_IN_PROGRESS [ label="no" ]
-UPDATE_COMPLETE_3 [ label="UPDATE_COMPLETE" ]
+  UPDATE_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollforward_cleanup -> check_rollforward_cleanup
+  try_rollforward_cleanup [ shape="rect" label="Run the ROLLFORWARD plan\n(deletes)" ]
+  check_rollforward_cleanup [ shape="diamond" label="Did all the rollforward\ndeletes all succeed?" ]
+  check_rollforward_cleanup -> UPDATE_COMPLETE_3 [ label="yes (or no-op)" ]
+  check_rollforward_cleanup -> UPDATE_ROLLBACK_IN_PROGRESS [ label="no" ]
+  UPDATE_COMPLETE_3 [ label="UPDATE_COMPLETE" ]
 
-UPDATE_ROLLBACK_IN_PROGRESS -> try_rollback_creates_and_updates -> check_rollback_creates_and_updates
-try_rollback_creates_and_updates [ shape="rect" label="Run the ROLLBACK plan\n(creates + updates)" ]
-check_rollback_creates_and_updates [ label="Did the rollback creates\n& updates all succeed?" shape="diamond" ]
-check_rollback_creates_and_updates -> UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ label="yes (or no-op)" ]
-check_rollback_creates_and_updates -> UPDATE_ROLLBACK_FAILED [ label="no" ]
+  UPDATE_ROLLBACK_IN_PROGRESS -> try_rollback_creates_and_updates -> check_rollback_creates_and_updates
+  try_rollback_creates_and_updates [ shape="rect" label="Run the ROLLBACK plan\n(creates + updates)" ]
+  check_rollback_creates_and_updates [ label="Did the rollback creates\n& updates all succeed?" shape="diamond" ]
+  check_rollback_creates_and_updates -> UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS [ label="yes (or no-op)" ]
+  check_rollback_creates_and_updates -> UPDATE_ROLLBACK_FAILED [ label="no" ]
 
-UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollback_cleanup -> check_rollback_cleanup
-try_rollback_cleanup [ shape="rect" label="Run the ROLLBACK plan\n(deletes)" ]
-check_rollback_cleanup [ shape="diamond" label="Did all the rollback\ndeletes all succeed?" ]
-check_rollback_cleanup -> UPDATE_ROLLBACK_COMPLETE [ label="yes (or no-op)" ]
-check_rollback_cleanup -> UPDATE_ROLLBACK_FAILED [ label="no" ]
+  UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollback_cleanup -> check_rollback_cleanup
+  try_rollback_cleanup [ shape="rect" label="Run the ROLLBACK plan\n(deletes)" ]
+  check_rollback_cleanup [ shape="diamond" label="Did all the rollback\ndeletes all succeed?" ]
+  check_rollback_cleanup -> UPDATE_ROLLBACK_COMPLETE [ label="yes (or no-op)" ]
+  check_rollback_cleanup -> UPDATE_ROLLBACK_FAILED [ label="no" ]
 
-// But would be useful to document: for each of those terminal states, what
-// states are the resources in?  What happens to the stack next?
+  // But would be useful to document: for each of those terminal states, what
+  // states are the resources in?  What happens to the stack next?
 
 }
+// # vi: set sw=2 et ai :

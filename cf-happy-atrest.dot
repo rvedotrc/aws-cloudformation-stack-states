@@ -1,20 +1,21 @@
 digraph stack_states {
 
-before_existence [ label="nothing" ]
-after_existence [ label="nothing" ]
+  before_existence [ label="nothing" ]
+  after_existence [ label="nothing" ]
 
-CREATED
-DELETED
-UPDATED
+  CREATED
+  DELETED
+  UPDATED
 
-before_existence ->  CREATED
+  before_existence ->  CREATED
 
-CREATED -> UPDATED
-UPDATED -> UPDATED
+  CREATED -> UPDATED
+  UPDATED -> UPDATED
 
-UPDATED -> DELETED
+  UPDATED -> DELETED
 
-CREATED -> DELETED
-DELETED -> after_existence [ label=" 90 days later" ]
+  CREATED -> DELETED
+  DELETED -> after_existence [ label=" 90 days later" ]
 
 }
+// # vi: set sw=2 et ai :
