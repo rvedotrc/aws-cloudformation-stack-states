@@ -33,4 +33,7 @@ check_deletes -> ROLLBACK_FAILED [ label="no" ]
 // But would be useful to document: for each of those terminal states, what
 // states are the resources in?  What happens to the stack next?
 
+// Resource statuses include:
+// CREATE_COMPLETE, UPDATE_COMPLETE, DELETE_COMPLETE, DELETE_FAILED, DELETE_SKIPPED.
+
 }
