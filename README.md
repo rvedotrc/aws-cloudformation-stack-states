@@ -99,8 +99,7 @@ order, to reach the requested outcome.
 
 The CreateStack, UpdateStack and DeleteStack API calls all make use of this
 approach: validate the request, work out what changes will be required, then
-make those changes.  The (Change Sets API
-calls)[http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html]
+make those changes.  The [Change Sets API calls](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html)
 can be used to inspect the planned changes before they are performed.
 
 The changes always break down into:
@@ -142,7 +141,7 @@ DeleteStack
 
 DeleteStack is reasonably straightforward; for each resource that is not
 already deleted, and for which the
-(DeletionPolicy)[http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html]
+[DeletionPolicy](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html)
 says to delete the resource, the resource deletion will be attempted.  In case
 of problems, rollback (i.e. recreating resources) is *not* performed.
 
