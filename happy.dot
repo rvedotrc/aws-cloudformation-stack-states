@@ -1,7 +1,7 @@
 digraph happy {
 
-  before_existence [ label="nothing" ]
-  after_existence [ label="nothing" ]
+  before_existence [ label="no stack" ]
+  after_existence [ label="no stack" ]
 
   CREATE_COMPLETE
   CREATE_IN_PROGRESS [ style=dotted ]

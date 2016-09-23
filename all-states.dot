@@ -5,8 +5,8 @@ digraph all_states {
 
   layers="happy:sad"
 
-  before_existence [ layer="happy" label="nothing" ]
-  after_existence [ layer="happy" label="nothing" ]
+  before_existence [ layer="happy" label="no stack" ]
+  after_existence [ layer="happy" label="no stack" ]
 
   updateable_stack [ layer="happy" label="an updateable stack\n(various states)" color="transparent" ]
   stuck_stack [ layer="sad" label="a non-updateable stack\n(various states)" color="transparent" ]

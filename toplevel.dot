@@ -1,7 +1,7 @@
 digraph toplevel {
 
-  before_existence [ label="nothing" ]
-  after_existence [ label="nothing" ]
+  before_existence [ label="no stack" ]
+  after_existence [ label="no stack" ]
 
   CREATED
   DELETED

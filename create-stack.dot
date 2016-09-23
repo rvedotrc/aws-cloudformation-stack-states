@@ -1,6 +1,6 @@
 digraph create_stack {
 
-  before_existence [ label="(no stack)" ]
+  before_existence [ label="no stack" ]
 
   CREATE_COMPLETE
   CREATE_IN_PROGRESS [ style=dotted ]

@@ -1,0 +1,17 @@
+digraph delete_stack {
+
+  after_existence [ layer="happy" label="no stack" ]
+
+  deletable_stack [ label="stack\n(various states)" color="transparent" ]
+
+  DELETE_COMPLETE [ layer="happy" ]
+  DELETE_FAILED [ layer="sad" ]
+  DELETE_IN_PROGRESS [ layer="happy" style=dotted ]
+
+  deletable_stack -> DELETE_IN_PROGRESS -> DELETE_COMPLETE -> DELETE_FAILED
+  DELETE_FAILED -> deletable_stack [ constraint="false" ]
+
+  DELETE_COMPLETE -> after_existence [ label=" 90 days later" ]
+
+}
+// # vi: set sw=2 et ai :
