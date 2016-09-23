@@ -8,6 +8,9 @@ layers="happy:sad"
 before_existence [ layer="happy" label="nothing" ]
 after_existence [ layer="happy" label="nothing" ]
 
+updateable_stack [ layer="happy" label="an updateable stack\n(various states)" color="transparent" ]
+stuck_stack [ layer="sad" label="a non-updateable stack\n(various states)" color="transparent" ]
+
 CREATE_COMPLETE [ layer="happy" ]
 CREATE_IN_PROGRESS [ layer="happy" style=dotted ]
 CREATE_FAILED [ layer="sad" ]
@@ -28,39 +31,38 @@ UPDATE_ROLLBACK_IN_PROGRESS [ layer="sad" style=dotted ]
 edge [layer=happy];
 before_existence -> CREATE_IN_PROGRESS
 CREATE_IN_PROGRESS -> CREATE_COMPLETE
+CREATE_COMPLETE -> updateable_stack
+
 edge [layer=sad];
 CREATE_IN_PROGRESS -> ROLLBACK_IN_PROGRESS -> ROLLBACK_COMPLETE
-ROLLBACK_COMPLETE -> DELETE_IN_PROGRESS
+ROLLBACK_COMPLETE -> stuck_stack
 ROLLBACK_IN_PROGRESS -> ROLLBACK_FAILED
-ROLLBACK_FAILED -> DELETE_IN_PROGRESS // I think
+ROLLBACK_FAILED -> stuck_stack
 
 edge [layer=sad];
 CREATE_IN_PROGRESS -> CREATE_FAILED // ?
-CREATE_FAILED -> DELETE_IN_PROGRESS // ?
+CREATE_FAILED -> stuck_stack // ?
+stuck_stack -> DELETE_IN_PROGRESS
 
 
 edge [layer=happy];
-CREATE_COMPLETE -> UPDATE_IN_PROGRESS -> UPDATE_COMPLETE
+updateable_stack -> UPDATE_IN_PROGRESS -> UPDATE_COMPLETE -> updateable_stack
 UPDATE_IN_PROGRESS -> UPDATE_COMPLETE_CLEANUP_IN_PROGRESS -> UPDATE_COMPLETE
-UPDATE_COMPLETE -> UPDATE_IN_PROGRESS
 
 edge [layer=sad];
 UPDATE_IN_PROGRESS -> UPDATE_ROLLBACK_IN_PROGRESS -> UPDATE_ROLLBACK_COMPLETE
 UPDATE_ROLLBACK_IN_PROGRESS -> UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS -> UPDATE_ROLLBACK_COMPLETE
 UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS -> UPDATE_ROLLBACK_FAILED
-UPDATE_ROLLBACK_COMPLETE -> UPDATE_IN_PROGRESS
-UPDATE_ROLLBACK_COMPLETE -> DELETE_IN_PROGRESS
+UPDATE_ROLLBACK_COMPLETE -> updateable_stack
 
-UPDATE_ROLLBACK_IN_PROGRESS -> UPDATE_ROLLBACK_FAILED -> DELETE_IN_PROGRESS // maybe?
+UPDATE_ROLLBACK_IN_PROGRESS -> UPDATE_ROLLBACK_FAILED -> stuck_stack // maybe?
 
 edge [layer=happy];
-UPDATE_COMPLETE -> DELETE_IN_PROGRESS
-
-CREATE_COMPLETE -> DELETE_IN_PROGRESS
+updateable_stack -> DELETE_IN_PROGRESS
 DELETE_IN_PROGRESS -> DELETE_COMPLETE
 DELETE_COMPLETE -> after_existence [ label=" 90 days later" ]
 
 edge [layer=sad];
-DELETE_IN_PROGRESS -> DELETE_FAILED -> DELETE_IN_PROGRESS
+DELETE_IN_PROGRESS -> DELETE_FAILED -> stuck_stack
 
 }
