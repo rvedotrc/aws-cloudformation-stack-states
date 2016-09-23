@@ -17,7 +17,7 @@ digraph update_stack {
 
   UPDATE_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollforward_cleanup -> check_rollforward_cleanup
   try_rollforward_cleanup [ shape="rect" label="Run the ROLLFORWARD plan\n(deletes)" ]
-  check_rollforward_cleanup [ shape="diamond" label="Did all the rollforward\ndeletes all succeed?" ]
+  check_rollforward_cleanup [ shape="diamond" label="Did the rollforward\ndeletes all succeed?" ]
   check_rollforward_cleanup -> UPDATE_COMPLETE_3 [ label="yes (or no-op)" ]
   check_rollforward_cleanup -> UPDATE_ROLLBACK_IN_PROGRESS [ label="no" ]
   UPDATE_COMPLETE_3 [ label="UPDATE_COMPLETE" ]
@@ -30,7 +30,7 @@ digraph update_stack {
 
   UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS -> try_rollback_cleanup -> check_rollback_cleanup
   try_rollback_cleanup [ shape="rect" label="Run the ROLLBACK plan\n(deletes)" ]
-  check_rollback_cleanup [ shape="diamond" label="Did all the rollback\ndeletes all succeed?" ]
+  check_rollback_cleanup [ shape="diamond" label="Did the rollback\ndeletes all succeed?" ]
   check_rollback_cleanup -> UPDATE_ROLLBACK_COMPLETE [ label="yes (or no-op)" ]
   check_rollback_cleanup -> UPDATE_ROLLBACK_FAILED [ label="no" ]
 
