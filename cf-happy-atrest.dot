@@ -1,0 +1,32 @@
+digraph stack_states {
+
+node [layer=all];
+edge [layer=all];
+
+layers="happy"
+
+before_existence [ layer="happy" label="nothing" ]
+after_existence [ layer="happy" label="nothing" ]
+
+CREATED [ layer="happy" ]
+DELETED [ layer="happy" ]
+UPDATED [ layer="happy" ]
+
+edge [layer=happy];
+before_existence ->  CREATED
+
+
+
+edge [layer=happy];
+CREATED -> UPDATED
+UPDATED -> UPDATED
+
+
+edge [layer=happy];
+UPDATED -> DELETED
+
+CREATED -> DELETED
+DELETED -> after_existence [ label=" 90 days later" ]
+
+
+}
