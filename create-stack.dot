@@ -1,0 +1,36 @@
+digraph create_stack {
+
+node [layer=all];
+edge [layer=all];
+
+layers="happy:sad"
+
+before_existence [ layer="happy" label="(no stack)" ]
+
+CREATE_COMPLETE [ layer="happy" ]
+CREATE_IN_PROGRESS [ layer="happy" style=dotted ]
+CREATE_FAILED [ layer="sad" ]
+ROLLBACK_COMPLETE [ layer="sad" ]
+ROLLBACK_FAILED [ layer="sad" ]
+ROLLBACK_IN_PROGRESS [ layer="sad" style=dotted ]
+
+edge [layer=happy];
+before_existence -> CREATE_IN_PROGRESS -> try_creates -> check_creates
+try_creates [ shape="rect" label="Try creating the resources\n(respecting the dependency order)" ]
+check_creates [ label="Did the creates all succeed?" shape="diamond" ]
+check_creates -> CREATE_COMPLETE [ label="yes" ]
+check_creates -> do_we_need_rollback [ label="no" ]
+do_we_need_rollback [ shape="diamond" label="Did any of the creates succeed?" ]
+do_we_need_rollback -> CREATE_FAILED [ label="no" ]
+do_we_need_rollback -> ROLLBACK_IN_PROGRESS [ label="yes" ]
+
+ROLLBACK_IN_PROGRESS -> try_deletes -> check_deletes
+try_deletes [ shape="rect" label="Try deleting the resources\n(respecting the dependency order)" ]
+check_deletes [ shape="diamond" label="Did the deletes all succeed?" ]
+check_deletes -> ROLLBACK_COMPLETE [ label="yes" ]
+check_deletes -> ROLLBACK_FAILED [ label="no" ]
+
+// But would be useful to document: for each of those terminal states, what
+// states are the resources in?  What happens to the stack next?
+
+}
