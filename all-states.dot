@@ -61,7 +61,8 @@ digraph all_states {
   DELETE_COMPLETE -> after_existence [ label=" 90 days later" ]
 
   edge [layer=sad];
-  DELETE_IN_PROGRESS -> DELETE_FAILED -> stuck_stack
+  DELETE_IN_PROGRESS -> DELETE_FAILED [ constraint="false" ]
+  DELETE_FAILED -> stuck_stack
 
 }
 // # vi: set sw=2 et ai :
