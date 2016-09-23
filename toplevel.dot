@@ -1,4 +1,4 @@
-digraph stack_states {
+digraph toplevel {
 
   before_existence [ label="nothing" ]
   after_existence [ label="nothing" ]

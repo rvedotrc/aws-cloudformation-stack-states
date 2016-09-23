@@ -1,4 +1,4 @@
-digraph stack_states {
+digraph all_states {
 
   node [layer=all];
   edge [layer=all];
