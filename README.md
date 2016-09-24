@@ -48,7 +48,7 @@ At a high level, the lifecycle of a stack is:
 
 which you can visualise as follows:
 
-![(diagram)](output/toplevel.png)
+![(diagram)](toplevel.png)
 
 However, "CREATED", "UPDATED" and "DELETED" are not real stack states – just a
 simplified model.  So let's talk specifics.
@@ -58,7 +58,7 @@ The Happy Path
 
 If we ignore all the error cases, the state diagram is as follows:
 
-![(diagram)](output/happy.png)
+![(diagram)](happy.png)
 
  * the stack initially does not exist;
  * the stack is created:
@@ -90,7 +90,7 @@ Error Handling
 Let's complete the diagram by adding in all the states related to error
 handling:
 
-![(diagram)](output/all.png)
+![(diagram)](all-states.png)
 
 To make the diagram simpler, I've added a few "pseudo-states", to represent
 abstract concepts like "a stack is updateable".  I've also assumed that some
@@ -131,7 +131,7 @@ CreateStack
 For stack creation, the planned changes will always consist of resource
 creations only (no updates, no deletes):
 
-![(diagram)](output/create-stack.png)
+![(diagram)](create-stack.png)
 
 If anything goes wrong, then any resources that *were* created need to be
 deleted (the `ROLLBACK_IN_PROGRESS` / `ROLLBACK_FAILED` / `ROLLBACK_COMPLETE`
@@ -144,7 +144,7 @@ UpdateStack is the most complex case, because it may include resource creates,
 updates, and deletes.  And if anything goes wrong, this means that the
 rollback too might involve deletes, updates, and creates:
 
-![(diagram)](output/update-stack.png)
+![(diagram)](update-stack.png)
 
 DeleteStack
 -----------
@@ -155,7 +155,7 @@ already deleted, and for which the
 says to delete the resource, the resource deletion will be attempted.  In case
 of problems, rollback (i.e. recreating resources) is *not* performed.
 
-![(diagram)](output/delete-stack.png)
+![(diagram)](delete-stack.png)
 
 If there are problems, the stack goes to the `DELETE_FAILED` state.  Once the
 reason for the deletion failure has been identified and fixed, `DeleteStack`

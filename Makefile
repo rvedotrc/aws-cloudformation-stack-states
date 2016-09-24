@@ -1,10 +1,21 @@
-default:
-	rm -rf output
-	mkdir output
-	dot -Tpng -o output/all.png ./all-states.dot
-	dot -Tpng -o output/all-happy-subset.png -Glayerselect=happy ./all-states.dot
-	dot -Tpng -o output/happy.png ./happy.dot
-	dot -Tpng -o output/toplevel.png ./toplevel.dot
-	dot -Tpng -o output/create-stack.png ./create-stack.dot
-	dot -Tpng -o output/update-stack.png ./update-stack.dot
-	dot -Tpng -o output/delete-stack.png ./delete-stack.dot
+DOTS := $(shell echo *.dot)
+PNGS := $(patsubst %.dot, %.png, $(DOTS))
+SVGS := $(patsubst %.dot, %.svg, $(DOTS))
+
+default: all
+
+all: $(PNGS) $(SVGS)
+
+%.png: %.dot
+	dot -Tpng -o$@.tmp $< && mv $@.tmp $@
+
+%.svg: %.dot
+	dot -Tsvg -o$@.tmp $< && mv $@.tmp $@
+
+delete:
+	rm -f $(PNGS) $(SVGS)
+
+clean:
+	rm -f *.png *.svg
+	$(MAKE) all
+
