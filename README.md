@@ -25,6 +25,16 @@ However, it does not make it clear how the states relate to each other.
 
 This document aims to rectify that.
 
+*Caveat lector*: This document reflects *my understanding* of AWS
+CloudFormation.  It is not definitive.  I do not work for AWS.  I've been
+using CloudFormation for a few years now, but there are features of it that
+I've not yet used.  For all of those reasons, this document may not be 100%
+accurate.
+
+But I hope that it's helpful.
+
+With that said, let's get going.
+
 High-Level View
 ---------------
 
