@@ -8,9 +8,13 @@ digraph delete_stack {
   DELETE_FAILED [ layer="sad" ]
   DELETE_IN_PROGRESS [ layer="happy" style=dotted ]
 
-  deletable_stack -> DELETE_IN_PROGRESS -> DELETE_COMPLETE -> DELETE_FAILED
-  DELETE_FAILED -> deletable_stack [ constraint="false" ]
+  deletable_stack -> DELETE_IN_PROGRESS -> try_delete -> check_delete
+  try_delete [ shape="rect" label="Try deleting each resource\nthat has not already been\ndeleted (but see also the\nDeletionPolicy)" ]
+  check_delete [ shape="diamond" label="Did the deletes\nall succeed?" ]
+  check_delete -> DELETE_COMPLETE [ label="yes" ]
+  check_delete -> DELETE_FAILED [ label="no" ]
 
+  DELETE_FAILED -> deletable_stack [ constraint="false" ]
   DELETE_COMPLETE -> after_existence [ label=" 90 days later" ]
 
 }
