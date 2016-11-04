@@ -146,6 +146,12 @@ rollback too might involve deletes, updates, and creates:
 
 ![(diagram)](update-stack.png)
 
+If a stack reaches the `UPDATE_ROLLBACK_FAILED` state, the options are to
+attempt deletion (`DELETE_IN_PROGRESS`), re-attempt rollback
+(`UPDATE_ROLLBACK_IN_PROGRESS`), or to contact AWS support.  See
+[the AWS blog post on "continue update rollback"](https://aws.amazon.com/blogs/devops/continue-rolling-back-an-update-for-aws-cloudformation-stacks-in-the-update_rollback_failed-state/)
+for more information.
+
 DeleteStack
 -----------
 
