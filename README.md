@@ -122,7 +122,7 @@ some work by doing a create of a new resource, then deleting the old one.
 
 If anything goes wrong, then CloudFormation may attempt to roll back to the
 previous steady state.  This is done essentially by replaying the steps done
-so far, but in reverse order, and with the sense of all the changes reverse
+so far, but in reverse order, and with the sense of all the changes reversed
 (create instead of delete, and vice versa).
 
 CreateStack
