@@ -10,6 +10,7 @@ includes a [list of all the possible stack states](http://docs.aws.amazon.com/AW
  * `DELETE_COMPLETE`
  * `DELETE_FAILED`
  * `DELETE_IN_PROGRESS`
+ * `REVIEW_IN_PROGRESS`
  * `ROLLBACK_COMPLETE`
  * `ROLLBACK_FAILED`
  * `ROLLBACK_IN_PROGRESS`
@@ -81,6 +82,11 @@ Secondly, note that once a stack has been deleted (`DELETE_COMPLETE`), the
 stack remains present in AWS CloudFormation for the next 90 days, so that the
 stack's metadata and events (log) can be inspected.  After 90 days, the stack
 disappears from CloudFormation.
+
+There's also the `REVIEW_IN_PROGRESS` state, which (when used) sits right near the top,
+just after "the stack initially does not exist", but before
+`CREATE_IN_PROGRESS`.  `REVIEW_IN_PROGRESS` is used if the stack is created
+via a change set.
 
 But: what about the error cases?
 

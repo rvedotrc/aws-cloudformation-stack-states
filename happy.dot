@@ -3,6 +3,7 @@ digraph happy {
   before_existence [ label="no stack" ]
   after_existence [ label="no stack" ]
 
+  REVIEW_IN_PROGRESS [ style=dotted ]
   CREATE_COMPLETE
   CREATE_IN_PROGRESS [ style=dotted ]
   DELETE_COMPLETE
@@ -12,7 +13,10 @@ digraph happy {
   UPDATE_IN_PROGRESS [ style=dotted ]
 
   before_existence -> CREATE_IN_PROGRESS
+  before_existence -> REVIEW_IN_PROGRESS -> CREATE_IN_PROGRESS
   CREATE_IN_PROGRESS -> CREATE_COMPLETE
+
+  REVIEW_IN_PROGRESS -> DELETE_COMPLETE // never fully created
 
   CREATE_COMPLETE -> UPDATE_IN_PROGRESS -> UPDATE_COMPLETE_CLEANUP_IN_PROGRESS -> UPDATE_COMPLETE
   UPDATE_COMPLETE -> UPDATE_IN_PROGRESS

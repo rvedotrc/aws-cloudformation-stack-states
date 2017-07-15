@@ -15,6 +15,7 @@ digraph all_states {
   empty_stack -> DELETE_IN_PROGRESS [ layer="sad" ]
 
   CREATE_COMPLETE [ layer="happy" ]
+  REVIEW_IN_PROGRESS [ layer="happy" style=dotted ]
   CREATE_IN_PROGRESS [ layer="happy" style=dotted ]
   CREATE_FAILED [ layer="sad" ]
   DELETE_COMPLETE [ layer="happy" ]
@@ -33,8 +34,11 @@ digraph all_states {
 
   edge [layer=happy];
   before_existence -> CREATE_IN_PROGRESS
+  before_existence -> REVIEW_IN_PROGRESS -> CREATE_IN_PROGRESS
   CREATE_IN_PROGRESS -> CREATE_COMPLETE
   CREATE_COMPLETE -> updateable_stack
+
+  REVIEW_IN_PROGRESS -> DELETE_COMPLETE
 
   edge [layer=sad];
   CREATE_IN_PROGRESS -> ROLLBACK_IN_PROGRESS -> ROLLBACK_COMPLETE

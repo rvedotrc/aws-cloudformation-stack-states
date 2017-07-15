@@ -2,6 +2,7 @@ digraph create_stack {
 
   before_existence [ label="no stack" ]
 
+  REVIEW_IN_PROGRESS [ style=dotted ]
   CREATE_COMPLETE
   CREATE_IN_PROGRESS [ style=dotted ]
   CREATE_FAILED
@@ -10,6 +11,7 @@ digraph create_stack {
   ROLLBACK_IN_PROGRESS [ style=dotted ]
 
   before_existence -> CREATE_IN_PROGRESS -> try_creates -> check_creates
+  before_existence -> REVIEW_IN_PROGRESS -> CREATE_IN_PROGRESS
   try_creates [ shape="rect" label="Try creating the resources\n(respecting the dependency order)" ]
   check_creates [ label="Did the creates all succeed?" shape="diamond" ]
   check_creates -> CREATE_COMPLETE [ label="yes" ]
